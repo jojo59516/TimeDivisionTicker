@@ -1,4 +1,5 @@
 #define DEBUG
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +18,8 @@ public class TimeDivisionTicker
 
     public TimeDivisionTicker(int channels)
     {
-        Assert.IsTrue(channels > 0);
+        if (channels <= 0)
+            throw new ArgumentOutOfRangeException(nameof(channels), channels, "must be positive");
 
         m_CurrentHint = 0;
         m_FreelistHead = InvalidIndex;
