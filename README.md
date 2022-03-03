@@ -9,3 +9,5 @@
 注册函数的返回值 `handle` 可以用来反注册，可以用来计算下一次注册的 `hint`，如果希望下次注册的函数与其同信道（即保证同一帧执行），那么可以传入 `hint: handle`，否则传入 `hint: handle + 1`（channels > 1 时）。
 
 在实现方面，为了尽可能降低内存和 GC 开销，内部使用了数组形式的链表 + freelist 的数据结构，所有的 actions 被存放在一个数组中，freelist 和每个 Channel 各拥有一个 `head`，从它出发可以遍历 freelist 或该信道的所有 `action` 数组下标。但代价是注册与反注册时需要从 `head` 开始遍历到对应位置再插入或删除，复杂度是 `O(n)` 的。
+
+主模块只有 `TimeDivisionTicker.cs`。`TickDriver.cs` 实现了一个辅助的、可以直接驱动主模块 tick 的 Unity 组件。
